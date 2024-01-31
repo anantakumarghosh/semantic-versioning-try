@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.2-alpha.2](https://github.com/anantakumarghosh/semantic-versioning-try/compare/v0.0.2-alpha.1...v0.0.2-alpha.2) (2024-01-31)
+
+
+### Bug Fixes
+
+* :wrench: fix ci ([#1](https://github.com/anantakumarghosh/semantic-versioning-try/issues/1)) ([9085b34](https://github.com/anantakumarghosh/semantic-versioning-try/commit/9085b3453ae235e884778059bf462e4c90bb5169))
+
 ### 0.0.2-alpha.1 (2024-01-31)
 
 
