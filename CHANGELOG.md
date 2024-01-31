@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.1.0-beta.1](https://github.com/anantakumarghosh/semantic-versioning-try/compare/v0.0.2-beta.1...v0.1.0-beta.1) (2024-01-31)
+
+
+### Features
+
+* :zap: test release ([#1](https://github.com/anantakumarghosh/semantic-versioning-try/issues/1)) ([459e435](https://github.com/anantakumarghosh/semantic-versioning-try/commit/459e435c46fd8c094213d148307a76f2d31721a0))
+
 ### [0.0.2](https://github.com/anantakumarghosh/semantic-versioning-try/compare/v0.0.2-beta.1...v0.0.2) (2024-01-31)
 
 
