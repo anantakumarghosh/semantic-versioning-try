@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.2-beta.0](https://github.com/anantakumarghosh/semantic-versioning-try/compare/v0.0.2-alpha.6...v0.0.2-beta.0) (2024-01-31)
+
+
+### Bug Fixes
+
+* update indentation ([f5fd084](https://github.com/anantakumarghosh/semantic-versioning-try/commit/f5fd084639e33227f9c44022256778037c547086))
+
 ### [0.0.2-alpha.6](https://github.com/anantakumarghosh/semantic-versioning-try/compare/v0.0.2-alpha.5...v0.0.2-alpha.6) (2024-01-31)
 
 ### [0.0.2-alpha.5](https://github.com/anantakumarghosh/semantic-versioning-try/compare/v0.0.2-alpha.4...v0.0.2-alpha.5) (2024-01-31)
