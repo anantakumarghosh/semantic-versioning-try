@@ -1,5 +1,4 @@
 on:
-permissions: write-all
   push:
     # Sequence of patterns matched against refs/tags
     tags:
@@ -11,6 +10,7 @@ jobs:
   create-release:
     name: Create Release
     runs-on: ubuntu-latest
+    permissions: write-all
     steps:
       - name: Checkout code
         uses: actions/checkout@master
