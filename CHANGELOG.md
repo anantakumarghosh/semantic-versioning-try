@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.2-beta.1](https://github.com/anantakumarghosh/semantic-versioning-try/compare/v0.0.2-beta.0...v0.0.2-beta.1) (2024-01-31)
+
+
+### Bug Fixes
+
+* :bug: try new release strategy ([#1](https://github.com/anantakumarghosh/semantic-versioning-try/issues/1)) ([2334ecc](https://github.com/anantakumarghosh/semantic-versioning-try/commit/2334ecc3f382752266cc5952ccbdb85813b0dd1c))
+
 ### [0.0.2-beta.0](https://github.com/anantakumarghosh/semantic-versioning-try/compare/v0.0.2-alpha.6...v0.0.2-beta.0) (2024-01-31)
 
 
