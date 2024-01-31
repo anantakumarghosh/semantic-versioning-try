@@ -47,3 +47,11 @@ jobs:
         # body_path: ./CHANGELOG.md
         draft: false
         prerelease: false
+
+    - name: Release Please
+      uses: google-github-actions/release-please-action@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        # this is a built-in strategy in release-please, see "Action Inputs"
+        # for more options
+        release-type: node
