@@ -1,0 +1,68 @@
+name: Tag Release CI on PR Merge to Development
+
+on:
+  workflow_dispatch:
+    inputs:
+    version_type:
+      type: choice
+      description: Choose version bump type
+      options: 
+      - -r major
+      - -r minor
+      - -r patch
+      - -p alpha
+      - -p beta
+      - -p build
+      - -p hotfix
+      - -p build
+      required: true
+      default: "build"
+  pull_request:
+    types:
+      - closed
+    branches:
+      - 'development'
+jobs:
+  # build:
+  #   runs-on: ubuntu-latest
+
+  #   steps:
+  #     - name: Checkout Repository
+  #       uses: actions/checkout@v2
+
+  #     - name: Set up Node.js
+  #       uses: actions/setup-node@v2
+  #       with:
+  #         node-version: 14
+
+      # - name: Install Dependencies
+      #   run: npm install
+
+      # - name: Run Tests
+      #   run: npm test
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'development'
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        # with:
+        #   path: development
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+
+      - name: Change version
+        run:  npm run release -- ${{ github.event.inputs.repo_names }}
+
+      - name: Push Tags
+        run: git push --follow-tags origin development
+
+
+# npm run release -- -r patch
+# npm run release -- --prerelease beta

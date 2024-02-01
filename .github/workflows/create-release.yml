@@ -3,6 +3,8 @@ on:
     # Sequence of patterns matched against refs/tags
     tags:
       - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
+    branches:
+      - 'development'
 
 name: Create Release
 
@@ -16,13 +18,13 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@master
 
-    # - name: Set up Node.js
-    #   uses: actions/setup-node@v4
-    #   with:
-    #     node-version: '16'
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '16'
 
-    # - name: Install dependencies
-    #   run: npm install -g standard-version
+    - name: Install dependencies
+      run: npm install -g standard-version
 
     # - name: Generate release notes
     #   id: release
@@ -35,23 +37,16 @@ jobs:
     # - name: Display release notes
     #   run: echo "${{ steps.release.outputs.release_notes }}"
 
-    # - name: Create Release
-    #   id: create_release
-    #   uses: actions/create-release@latest
-    #   env:
-    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
-    #   with:
-    #     tag_name: ${{ github.ref }}
-    #     release_name: Release ${{ github.ref }}
-    #     body: ${{ steps.release.outputs.release_notes }}
-    #     # body_path: ./CHANGELOG.md
-    #     draft: false
-    #     prerelease: false
-
-    - name: Release Please
-      uses: google-github-actions/release-please-action@v4
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@latest
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
       with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        # this is a built-in strategy in release-please, see "Action Inputs"
-        # for more options
-        release-type: node
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        # body: ${{ steps.release.outputs.release_notes }}
+        # body_path: ./CHANGELOG.md
+        draft: false
+        prerelease: false
+
