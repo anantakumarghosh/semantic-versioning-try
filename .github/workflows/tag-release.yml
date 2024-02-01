@@ -66,7 +66,7 @@ jobs:
           fi
           echo "Version type: $VERSION_TYPE_DEFAULT"
       - name: Change version
-        run:  npm run release -- ${{ env.version_type }}
+        run:  npm run release -- ${{ env.$VERSION_TYPE_DEFAULT }}
 
       - name: Push Tags
         run: git push --follow-tags origin development
