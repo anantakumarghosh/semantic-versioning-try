@@ -40,10 +40,10 @@ jobs:
       # - name: Run Tests
       #   run: npm test
 
-  deploy:
+  release_tag:
     runs-on: ubuntu-latest
+    permissions: write-all
     if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'development'
-
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
