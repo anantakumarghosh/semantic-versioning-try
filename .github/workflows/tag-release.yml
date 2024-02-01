@@ -69,6 +69,8 @@ jobs:
           fi
           echo "Version type: $VERSION_TYPE_DEFAULT"
           echo "::set-output name=version_type::$VERSION_TYPE_DEFAULT"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Change version
         run:  npm run release -- ${{ steps.release-type.outputs.version_type}}
