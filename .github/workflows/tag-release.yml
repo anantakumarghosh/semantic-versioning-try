@@ -55,6 +55,9 @@ jobs:
         with:
           node-version: 16
 
+      - name: Install dependencies
+        run: npm install -g standard-version
+
       - name: Set release type
         id: release-type
         run: |
