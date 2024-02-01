@@ -65,8 +65,10 @@ jobs:
             export VERSION_TYPE_DEFAULT="${{ github.event.inputs.version_type }}"
           fi
           echo "Version type: $VERSION_TYPE_DEFAULT"
+          echo "::set-output name=version_type::$VERSION_TYPE_DEFAULT"
+
       - name: Change version
-        run:  npm run release -- $(echo $VERSION_TYPE_DEFAULT)
+        run:  npm run release -- ${{ steps.release-type.outputs.version_type}}
 
       - name: Push Tags
         run: git push --follow-tags origin development
