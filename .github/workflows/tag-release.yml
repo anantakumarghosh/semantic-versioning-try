@@ -3,20 +3,20 @@ name: Tag Release CI on PR Merge to Development
 on:
   workflow_dispatch:
     inputs:
-    version_type:
-      type: choice
-      description: Choose version bump type
-      options: 
-      - -r major
-      - -r minor
-      - -r patch
-      - -p alpha
-      - -p beta
-      - -p build
-      - -p hotfix
-      - -p build
-      required: true
-      default: "-p build"
+      version_type:
+        type: choice
+        description: Choose version bump type
+        options: 
+        - -r major
+        - -r minor
+        - -r patch
+        - -p alpha
+        - -p beta
+        - -p build
+        - -p hotfix
+        - -p build
+        required: true
+        default: "-p build"
   pull_request:
     types:
       - closed
