@@ -3,20 +3,20 @@ name: Tag Release CI on PR Merge to Development
 on:
   workflow_dispatch:
     inputs:
-    version_type:
-      type: choice
-      description: Choose version bump type
-      options: 
-      - -r major
-      - -r minor
-      - -r patch
-      - -p alpha
-      - -p beta
-      - -p build
-      - -p hotfix
-      - -p build
-      required: true
-      default: "build"
+      version_type:
+        type: choice
+        description: Choose version bump type
+        options: 
+        - -r major
+        - -r minor
+        - -r patch
+        - -p alpha
+        - -p beta
+        - -p build
+        - -p hotfix
+        - -p build
+        required: true
+        default: "-p build"
   pull_request:
     types:
       - closed
@@ -37,12 +37,10 @@ jobs:
 
       # - name: Install Dependencies
       #   run: npm install
-
       # - name: Run Tests
       #   run: npm test
 
   deploy:
-    needs: build
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'development'
 
