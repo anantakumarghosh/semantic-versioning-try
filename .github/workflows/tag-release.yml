@@ -58,6 +58,11 @@ jobs:
       - name: Install dependencies
         run: npm install -g standard-version
 
+      - name: Setup git
+        run: |
+          git config user.name "$(git log -n 1 --pretty=format:%an)"
+          git config user.email "$(git log -n 1 --pretty=format:%ae)"
+
       - name: Set release type
         id: release-type
         run: |
