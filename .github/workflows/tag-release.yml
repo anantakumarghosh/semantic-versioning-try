@@ -55,8 +55,18 @@ jobs:
         with:
           node-version: 16
 
+      - name: Set release type
+        id: release-type
+        run: |
+          if [ "${{ github.event.inputs.version_type }}" -eq "" ]; then
+           version_type=$(echo "-p build")
+           echo "version_type=$version_type" >> "$GITHUB_ENV"
+          else 
+           version_type=$(echo "${{ github.event.inputs.version_type }}")
+           echo "version_type=$version_type" >> "$GITHUB_ENV"
+          fi
       - name: Change version
-        run:  npm run release -- ${{ github.event.inputs.repo_names }}
+        run:  npm run release -- ${{ env.version_type }}
 
       - name: Push Tags
         run: git push --follow-tags origin development
