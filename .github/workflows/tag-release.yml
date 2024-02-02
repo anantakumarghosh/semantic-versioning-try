@@ -62,7 +62,7 @@ jobs:
         run: |
           git config user.name "$(git log -n 1 --pretty=format:%an)"
           git config user.email "$(git log -n 1 --pretty=format:%ae)"
-
+        
       - name: Set release type
         id: release-type
         run: |
@@ -80,15 +80,11 @@ jobs:
       - name: Change version
         run:  npm run release -- ${{ steps.release-type.outputs.version_type}}
 
-      - name: Change git config
-        run: |
-          git config user.name "akg"
-          git config user.email "antaghosh@gmail.com"
   
       - name: Push Tags
         run: git push --follow-tags origin development
         env:
-          GITHUB_TOKEN: ${{ secrets.PAT }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       # - name: Create Release
       #   id: create_release
