@@ -5,12 +5,19 @@ on:
     #   - 'development'
     tags:
       - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
+  workflow_run:
+    workflows: ["Tag Release CI on PR Merge to Development"]
+    types:
+      - completed
 
 name: Create Release
 
 jobs:
   create-release:
     name: Create Release
+    if: |
+     github.event_name == 'push' || (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success')
+    # if: github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     permissions: write-all
 
@@ -36,17 +43,26 @@ jobs:
 
     # - name: Display release notes
     #   run: echo "${{ steps.release.outputs.release_notes }}"
-
+    
+    - name: Get tags
+      run: git fetch --tags origin
+      
     - name: Create Release
       id: create_release
-      uses: actions/create-release@latest
+      run: gh release create $(git describe --tags $(git rev-list --tags --max-count=1))
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
-      with:
-        tag_name: ${{ github.ref }}
-        release_name: Release ${{ github.ref }}
-        # body: ${{ steps.release.outputs.release_notes }}
-        # body_path: ./CHANGELOG.md
-        draft: false
-        prerelease: false
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    # - name: Create Release
+    #   id: create_release
+    #   uses: actions/create-release@latest
+    #   env:
+    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+    #   with:
+    #     tag_name: ${{ github.ref }}
+    #     release_name: Release ${{ github.ref }}
+    #     # body: ${{ steps.release.outputs.release_notes }}
+    #     # body_path: ./CHANGELOG.md
+    #     draft: false
+    #     prerelease: false
 
