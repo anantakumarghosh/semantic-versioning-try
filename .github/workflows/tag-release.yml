@@ -40,10 +40,10 @@ jobs:
       # - name: Run Tests
       #   run: npm test
 
-  deploy:
+  release_tag:
     runs-on: ubuntu-latest
+    permissions: write-all
     if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'development'
-
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
@@ -55,25 +55,53 @@ jobs:
         with:
           node-version: 16
 
-      - name: Change version
-        run:  npm run release -- ${{ github.event.inputs.repo_names }}
+      - name: Install dependencies
+        run: npm install -g standard-version
 
+      - name: Setup git
+        run: |
+          git config user.name "$(git log -n 1 --pretty=format:%an)"
+          git config user.email "$(git log -n 1 --pretty=format:%ae)"
+
+      - name: Set release type
+        id: release-type
+        run: |
+         if [ -z "${{ github.event.inputs.version_type }}" ]; then
+            echo "Setting default version type"
+            export VERSION_TYPE_DEFAULT=" -r patch"
+          else
+            export VERSION_TYPE_DEFAULT="${{ github.event.inputs.version_type }}"
+          fi
+          echo "Version type: $VERSION_TYPE_DEFAULT"
+          echo "::set-output name=version_type::$VERSION_TYPE_DEFAULT"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Change version
+        run:  npm run release -- ${{ steps.release-type.outputs.version_type}}
+
+      - name: Change git config
+        run: |
+          git config user.name "akg"
+          git config user.email "antaghosh@gmail.com"
+  
       - name: Push Tags
         run: git push --follow-tags origin development
-
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@latest
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          # body: ${{ steps.release.outputs.release_notes }}
-          # body_path: ./CHANGELOG.md
-          draft: false
-          prerelease: false
+          GITHUB_TOKEN: ${{ secrets.PAT }}
 
+      # - name: Create Release
+      #   id: create_release
+      #   uses: actions/create-release@latest
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+      #   with:
+      #     tag_name: ${{ github.ref }}
+      #     release_name: Release ${{ github.ref }}
+      #     # body: ${{ steps.release.outputs.release_notes }}
+      #     # body_path: ./CHANGELOG.md
+      #     draft: false
+      #     prerelease: false
 
 # npm run release -- -r patch
 # npm run release -- --prerelease beta
